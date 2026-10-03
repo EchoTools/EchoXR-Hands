@@ -1,0 +1,15 @@
+# build output
+/out/
+/obj/
+*.obj
+*.exp
+*.ilk
+*.pdb
+*.res
+
+# binary inputs that aren't ours to commit (see tools/make_release.py):
+# Detours (MIT, build it from github.com/microsoft/Detours), Valve's openvr_api.dll,
+# and the plugin loader copied from a game install
+/third_party/*.lib
+/third_party/*.dll
+/stage/
