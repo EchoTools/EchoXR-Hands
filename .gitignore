@@ -13,3 +13,4 @@
 /third_party/*.lib
 /third_party/*.dll
 /stage/
+/build/

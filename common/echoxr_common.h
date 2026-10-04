@@ -106,6 +106,9 @@ inline bool MakeOpenXRExe(const std::wstring& dir, std::wstring& err, size_t* of
 //   anything else + plugins\ exists  -> a working loader: kept, plugin goes in plugins\
 //   anything else, no plugins\       -> not a plugin loader: replaced only when asked,
 //                                       old one saved as dbgcore.dll.bak
+//   nEVR runtime as BugSplat64.dll   -> the loader already: no dbgcore.dll at all (nEVR
+//                                       refuses to start next to one); the plugin goes in
+//                                       plugins\ and loads once _local/config.yaml lists it
 // ---------------------------------------------------------------------------
 static const size_t   kLegacySize = 45568;
 static const uint64_t kLegacyHash = 0xbba858556700da1aull;   // FNV-1a 64
@@ -117,10 +120,17 @@ inline uint64_t Fnv1a(const std::string& s) {
     return h;
 }
 
-enum LoaderState { L_MISSING, L_OURS, L_LEGACY, L_OTHER_LOADER, L_FOREIGN };
+enum LoaderState { L_MISSING, L_OURS, L_LEGACY, L_OTHER_LOADER, L_FOREIGN, L_NEVR };
+
+// nEVR runtime (github.com/EchoTools/nevr-runtime) in the game's BugSplat64.dll slot: its
+// boot log line is in the file.
+inline bool NevrIsLoader(const std::wstring& dir) {
+    return ReadAll(dir + L"\\BugSplat64.dll").find("[NEVR.BOOT]") != std::string::npos;
+}
 
 // ours = the loader this build ships, to recognise it byte for byte.
 inline LoaderState ClassifyLoader(const std::wstring& dir, const void* ours, size_t oursSize) {
+    if (NevrIsLoader(dir)) return L_NEVR;
     std::string have = ReadAll(dir + L"\\dbgcore.dll");
     if (have.empty()) return L_MISSING;
     if (ours && have.size() == oursSize && !memcmp(have.data(), ours, oursSize)) return L_OURS;
@@ -149,6 +159,9 @@ inline void SetupHands(const std::wstring& gameDir, const std::wstring& install,
     if (!Exists(install + L"EchoXRHands.dll")) return;
     std::string ours = ReadAll(install + L"dbgcore.dll");
     LoaderState st = ClassifyLoader(gameDir, ours.data(), ours.size());
+    if (st == L_NEVR)
+        log(L"hand tracking: nEVR runtime loads plugins here, so no dbgcore.dll; "
+            L"list EchoXRHands.dll in _local/config.yaml (the EchoVR launcher does it)");
     if (st == L_FOREIGN) {
         log(L"hand tracking: a dbgcore.dll that isn't a plugin loader is in the game folder -- "
             L"left alone, so the hand tracking plugin isn't installed. Run EchoXRSetup.exe to replace it.");
