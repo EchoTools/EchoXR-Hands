@@ -1315,14 +1315,14 @@ static void UdpThread() {
             memcpy(&g_Frame, buf.data(), sizeof(HtvFrame));
             g_FrameTick = GetTickCount64();
             Net_SetLocal(g_Frame.curl, g_Frame.splay, g_Frame.valid);
-            if (!announced) { announced = true; Log("receiving tracking frames from the bridge"); }
+            if (!announced) { announced = true; Log("receiving tracking frames from the hand tracking layer"); }
             continue;
         }
         buf[n] = 0;
         std::string text(buf.data(), n);
         std::string reply;
         if (Trim(text) == "Ping") reply = "PONG";
-        else if (Trim(text) == "Uptime") reply = "UP " + std::to_string(GetTickCount64() - g_LoadTick);   // the bridge's launch check
+        else if (Trim(text) == "Uptime") reply = "UP " + std::to_string(GetTickCount64() - g_LoadTick);   // how long the plugin has run
         else { int k = ApplyConfigText(text); reply = "OK " + std::to_string(k); Log("live: %s", Trim(text).c_str()); }
         sendto(s, reply.c_str(), (int)reply.size(), 0, (SOCKADDR*)&from, fl);
     }
@@ -1608,9 +1608,9 @@ extern "C" {
 __declspec(dllexport) NvrPluginInfo NvrPluginGetInfo(void) {
     NvrPluginInfo info = {};
     info.name = "echoxr_hands";
-    info.description = "Your own fingers on Echo VR's hands, from SteamVR (EchoXR Hands)";
+    info.description = "Your own fingers on Echo VR's hands, from OpenXR hand tracking (EchoXR Hands)";
     info.version_major = 0;
-    info.version_minor = 3;
+    info.version_minor = 4;
     info.version_patch = 0;  // keep in step with VERSION
     return info;
 }
