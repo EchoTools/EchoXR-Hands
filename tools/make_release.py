@@ -36,13 +36,13 @@ FOLDERS = ("EchoXR/", "EchoXR/Hands/", "EchoXR/Hands/plugin/", "EchoXR/Hands/lay
 
 README = """EchoXR Hands {version}
 =================
-Your own fingers on Echo VR's hands, and other players'. Made by heisthecat31 and
-marshmallow-mia: https://github.com/EchoTools/EchoXR-Hands
+Your own fingers on Echo VR's hands, and other players'. Made by heisthecat31:
+https://github.com/EchoTools/EchoXR-Hands
 
 Your fingers come from OpenXR hand tracking in Echo VR's own session (SteamVR, WiVRn,
 Monado), through the layer in layer\\; the nEVR plugin (plugin\\EchoXRHands.dll, which
 the Echo VR launcher puts into bin\\win10\\plugins\\) poses the hands and shares fingers.
-The launcher installs and enables all of it: Mods, Additional Plugins, EchoXR Hands.
+The launcher installs and enables all of it: Mods, More mods, EchoXR Hands.
 
 Hold both hands fully open once in-game to calibrate; Ctrl+Alt+C recalibrates.
 Settings: EchoXRSettings.exe, or bin\\win10\\plugins\\EchoXRHands.txt.

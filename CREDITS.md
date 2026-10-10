@@ -7,8 +7,6 @@ EchoXR Hands puts your own fingers on Echo VR's hands, from OpenXR hand tracking
 - **heisthecat31** (he_is_the_cat): created EchoXR Hands. The finger plugin, how the
   fingers are posed and shared with other players, the settings window, the calibration,
   and the original SteamVR finger bridge whose curl maths the OpenXR layer keeps.
-- **marshmallow-mia**: the nEVR runtime plugin build, CMake, and the OpenXR API layer
-  that reads the fingers in the game's own session.
 
 ## What it builds on
 

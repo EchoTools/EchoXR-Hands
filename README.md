@@ -9,10 +9,9 @@ It runs with [EchoXR](https://github.com/EchoTools/EchoXR) (Echo VR on OpenXR) a
 [nEVR runtime](https://github.com/EchoTools/nevr-runtime) mod loader. Your fingers come
 from **OpenXR hand tracking in Echo VR's own session**, so it works on every OpenXR runtime
 that has it: SteamVR, WiVRn, Monado. The [Echo VR launcher](https://github.com/marshmallow-mia/EchoVR_Launcher)
-installs it (Mods → Additional Plugins → EchoXR Hands) and turns it on for each start.
+installs it (Mods → More mods → EchoXR Hands) and turns it on for each start.
 
-Made by **heisthecat31** (the plugin, the settings window, the original SteamVR finger
-bridge) and **marshmallow-mia** (the nEVR plugin build and the OpenXR layer).
+Made by **heisthecat31**.
 
 ## What it does
 
